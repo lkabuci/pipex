@@ -7,14 +7,6 @@
 #include <errno.h>
 #include <fcntl.h>
 
-typedef struct cmd
-{
-	char	*path;
-	char	*cmd;
-	char	*flag;
-};
-
-
 typedef struct params
 {
 	int		ac;
@@ -25,7 +17,8 @@ typedef struct params
 	char	*cmd2;
 	char	*cmd2_flags;
 	char	*file2;
-	char	*path;
+	char	*path1;
+	char	*path2;
 	char	*paths;
 	char	*args;
 	char	**envp;
