@@ -74,3 +74,14 @@ char	*ft_strjoin(char *s1, char *s2)
 	ft_memcpy(buffer + s1_len, s2, s2_len);
 	return (buffer);
 }
+
+int	ft_strchr(char *str, char c)
+{
+	while (*str)
+	{
+		if (*str == c)
+			return (1);
+		str++;
+	}
+	return (0);
+}
