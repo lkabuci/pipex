@@ -8,12 +8,7 @@
 
 int main(int argc, char const *argv[], char *envp[])
 {
-	char *av[] = {"ls", NULL};
-	int fd = open("outfile", O_WRONLY | O_CREAT, 0777);
-	if (fd == -1)
-		perror("outfile");
-	dup2(fd, STDOUT_FILENO);
-	// close(fd);
-	execve("/bin/ls", av, NULL);
+	char *args[] = {"ls", "-l", "-a", NULL};
+	execve("/bin/ls", args, NULL);
 	return 0;
 }

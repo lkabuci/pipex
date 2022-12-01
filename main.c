@@ -16,6 +16,7 @@ static void	execFirst(t_params *p)
 	{
 		perror(p->cmd1.cmd);
 		free_tab(args);
+		exit(0);
 	}
 }
 
@@ -29,16 +30,18 @@ static void	execSecond(t_params *p)
 	args[0]	= p->cmd2.cmd;
 	args[1]	= p->cmd2.flag;
 	args[2]	= NULL;
-	fd = open(p->cmd2.file, O_WRONLY | O_CREAT, 0777);
+	fd = open(p->cmd2.file, O_WRONLY | O_CREAT, 0644);
 	if (fd == -1)
 		perror(p->cmd2.file);
-	dup2(fd, STDOUT_FILENO);
+	dup2(fd, 1);
 	close(fd);
-
-	if (execve(p->cmd2.path, args, (char **)p->env_paths) == -1)
+	dup2(p->fd[0],0);
+	close(p->fd[1]);
+	close(p->fd[0]);
+	if (execve(p->cmd2.path, args, p->main_params.env) == -1)
 	{
 		free_tab(args);
-		fprintf(stderr, "ERROR in command %s\n, %i", args[0], 5);
+		fprintf(stderr, "ERROR in command 1 %s\n, %i", args[0], 5);
 		perror(p->cmd2.cmd);
 		exit(127);
 	}
