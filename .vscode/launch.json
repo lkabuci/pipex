@@ -4,12 +4,12 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/pipex",
+            "program": "${workspaceFolder}/a.out",
             "args": [
-                "infile",
-                "/bin/ls -l",
-                "wc -c",
-                "outfile"
+                // "infile",
+                // "/bin/ls -l",
+                // "wc -c",
+                // "outfile"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

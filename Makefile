@@ -4,12 +4,11 @@ CFLAGS	=	-Wall -Wextra -Werror -g
 
 NAME	=	pipex
 HEADER	=	pipex.h
-SRCS	=	main.c \
+SRCS_MD	=	./mandatorypipex.c \
 			parse.c \
 			utils.c \
 			split.c \
 			pipex_utils.c \
-			utils_print.c \
 
 OBJS	=	$(SRCS:.c=.o)
 

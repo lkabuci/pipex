@@ -1,5 +1,17 @@
 #include "pipex.h"
 
+void	at_exit(t_params *p, pid_t *pid1, pid_t *pid2)
+{
+	close(p->fd[0]);
+	close(p->fd[1]);
+	waitpid(*pid1, NULL, 0);
+	waitpid(*pid2, NULL, 0);
+	free_tab(p->cmd1.args);
+	free(p->cmd1.path);
+	free(p->cmd2.path);
+	free_tab(p->cmd2.args);
+}
+
 char	*join_path(char *s1, char sep, char *s2)
 {
 	size_t	s1_len;

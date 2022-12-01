@@ -12,6 +12,7 @@ typedef struct s_cmd
 	char	*cmd;
 	char	*flag;
 	char	*path;
+	char	**args;
 	char	*file;
 } t_cmd;
 
@@ -35,6 +36,8 @@ typedef struct params
 
 /* **************** UTILS **************** */
 char	*join_path(char *s1, char sep, char *s2);
+char	**join_tab(char *cmd, char **args);
+
 int		ft_strchr(char *str, char c);
 void	free_tab(char **tab);
 void	*ft_memcpy(void *dst, void *src, size_t n);
@@ -43,6 +46,7 @@ void	ft_putstr_fd(int fd, char *str);
 char	**ft_split(char *str, char sep);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strncmp(char *s1, char *s2, size_t n);
+void	at_exit(t_params *p, pid_t *pid1, pid_t *pid2);
 
 int		parsing(t_params *p);
 

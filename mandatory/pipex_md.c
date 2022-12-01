@@ -2,34 +2,30 @@
 
 static void	execFirst(t_params *p)
 {
-	close(p->fd[0]);
-	dup2(p->fd[1], STDOUT_FILENO);
-	close(p->fd[1]);
-	char **args;
+	int	fd;
 
-	args = malloc(sizeof(char *) * ft_strlen(p->cmd1.cmd) +
-		ft_strlen(p->cmd1.flag) + 1);
-	args[0]	= p->cmd1.cmd;
-	args[1]	= p->cmd1.flag;
-	args[2]	= NULL;
-	if (execve(p->cmd1.path, args, p->main_params.env) == -1)
+	fd = open(p->cmd1.file, O_RDONLY);
+	if (fd == -1)
+		perror(p->cmd1.file);
+	else
+	{
+		dup2(fd, 0);
+		close(fd);
+	}
+	dup2(p->fd[1], 1);
+	close(p->fd[0]);
+	close(p->fd[1]);
+	if (execve(p->cmd1.path, p->cmd1.args, p->main_params.env) == -1)
 	{
 		perror(p->cmd1.cmd);
-		free_tab(args);
 		exit(0);
 	}
 }
 
 static void	execSecond(t_params *p)
 {
-	char	**args;
 	int		fd;
 
-	args = malloc(sizeof(char *) * ft_strlen(p->cmd2.cmd) +
-		ft_strlen(p->cmd2.flag) + 1);
-	args[0]	= p->cmd2.cmd;
-	args[1]	= p->cmd2.flag;
-	args[2]	= NULL;
 	fd = open(p->cmd2.file, O_WRONLY | O_CREAT, 0644);
 	if (fd == -1)
 		perror(p->cmd2.file);
@@ -38,10 +34,8 @@ static void	execSecond(t_params *p)
 	dup2(p->fd[0],0);
 	close(p->fd[1]);
 	close(p->fd[0]);
-	if (execve(p->cmd2.path, args, p->main_params.env) == -1)
+	if (execve(p->cmd2.path, p->cmd2.args, p->main_params.env) == -1)
 	{
-		free_tab(args);
-		fprintf(stderr, "ERROR in command 1 %s\n, %i", args[0], 5);
 		perror(p->cmd2.cmd);
 		exit(127);
 	}
@@ -68,10 +62,7 @@ int main(int ac, char **av, char **env)
 	pid2 = fork();
 	if (!pid2)
 		execSecond(&p);
-	close(p.fd[0]);
-	close(p.fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	at_exit(&p, &pid1, &pid2);
 	return (1);
 }
 

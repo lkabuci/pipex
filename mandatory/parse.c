@@ -34,6 +34,7 @@ static int	get_path(t_params *p, t_cmd *cmd)
 		else
 		{
 			cmd->path = path;
+			free_tab(paths);
 			return (1);
 		}
 		i++;
@@ -47,20 +48,18 @@ static int	get_path(t_params *p, t_cmd *cmd)
 
 int	parsing(t_params *p)
 {
-	char	**part1;
-	char	**part2;
 	if (p->main_params.ac != 5)
 	{
 		ft_putstr_fd(2, "Invalid arguments. Quiting...\n");
 		exit(EXIT_FAILURE);
 	}
-	part1 = ft_split(p->main_params.av[2], ' ');
-	part2 = ft_split(p->main_params.av[3], ' ');
+	p->cmd1.args = ft_split(p->main_params.av[2], ' ');
+	p->cmd2.args = ft_split(p->main_params.av[3], ' ');
 	p->cmd1.file = p->main_params.av[1];
-	p->cmd1.cmd = part1[0];
-	p->cmd1.flag = part1[1];
-	p->cmd2.cmd = part2[0];
-	p->cmd2.flag = part2[1];
+	p->cmd1.cmd = p->cmd1.args[0];
+	p->cmd1.flag = p->cmd1.args[1];
+	p->cmd2.cmd = p->cmd2.args[0];
+	p->cmd2.flag = p->cmd2.args[1];
 	p->cmd2.file = p->main_params.av[4];
 	get_env_path(p);
 	if ((get_path(p, &p->cmd1) == -1))
