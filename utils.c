@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/02 18:41:30 by relkabou          #+#    #+#             */
+/*   Updated: 2022/12/02 19:22:23 by relkabou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	ft_putstr_fd(int fd, char *str)
@@ -53,35 +65,6 @@ int	ft_strncmp(char *s1, char *s2, size_t n)
 			return (0);
 		s1++;
 		s2++;
-	}
-	return (0);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	size_t	s1_len;
-	size_t	s2_len;
-	char	*buffer;
-
-	if (!s1 || !s2)
-		return (NULL);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	buffer = (char *) malloc(sizeof(char) * (s1_len + s2_len + 1));
-	if (!buffer)
-		return (NULL);
-	ft_memcpy(buffer, s1, s1_len);
-	ft_memcpy(buffer + s1_len, s2, s2_len);
-	return (buffer);
-}
-
-int	ft_strchr(char *str, char c)
-{
-	while (*str)
-	{
-		if (*str == c)
-			return (1);
-		str++;
 	}
 	return (0);
 }

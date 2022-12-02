@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/02 19:25:19 by relkabou          #+#    #+#             */
+/*   Updated: 2022/12/02 19:25:35 by relkabou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 static void	get_env_path(t_params *p)
@@ -7,28 +19,26 @@ static void	get_env_path(t_params *p)
 		if (!(ft_strncmp("PATH=", *p->main_params.env, 5)))
 		{
 			p->env_paths = *p->main_params.env;
-			break;
+			break ;
 		}
 		p->main_params.env++;
 	}
 }
 
-static int	get_path(t_params *p, t_cmd *cmd)
+static void	get_path(t_params *p, t_cmd *cmd)
 {
 	char	**paths;
 	char	*path;
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (ft_strchr(cmd->cmd, '/') && !access(cmd->cmd, F_OK | X_OK))
 	{
 		cmd->path = cmd->cmd;
-		return (1);
+		return ;
 	}
 	paths = ft_split(p->env_paths + 5, ':');
-	if (!paths)
-		return 0;
-	while(paths[i])
+	while (*paths && paths && paths[++i])
 	{
 		path = join_path(paths[i], '/', cmd->cmd);
 		if ((access(path, F_OK | X_OK)) == -1)
@@ -37,13 +47,11 @@ static int	get_path(t_params *p, t_cmd *cmd)
 		{
 			cmd->path = path;
 			free_tab(paths);
-			return (1);
+			return ;
 		}
-		i++;
 	}
 	free_tab(paths);
 	cmd->path = NULL;
-	return (-1);
 }
 
 int	parsing(t_params *p)
@@ -62,16 +70,7 @@ int	parsing(t_params *p)
 	p->cmd2.flag = p->cmd2.args[1];
 	p->cmd2.file = p->main_params.av[4];
 	get_env_path(p);
-	if ((get_path(p, &p->cmd1) == -1))
-	{
-		ft_putstr_fd(2, "zsh: command not found: ");
-		ft_putstr_fd(2, p->cmd1.cmd);
-	}
-	if ((get_path(p, &p->cmd2) == -1))
-	{
-		ft_putstr_fd(2, "zsh: command not found: ");
-		ft_putstr_fd(2, p->cmd2.cmd);
-	}
-	return 1;
+	get_path(p, &p->cmd1);
+	get_path(p, &p->cmd2);
+	return (1);
 }
-

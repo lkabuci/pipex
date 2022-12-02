@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/02 18:40:40 by relkabou          #+#    #+#             */
+/*   Updated: 2022/12/02 19:23:51 by relkabou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
-#include <string.h>
-#include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <errno.h>
+# include <string.h>
+# include <fcntl.h>
 
 typedef struct s_cmd
 {
@@ -15,15 +27,14 @@ typedef struct s_cmd
 	char	*path;
 	char	**args;
 	char	*file;
-} t_cmd;
+}	t_cmd;
 
 typedef struct s_main
 {
 	int		ac;
 	char	**av;
 	char	**env;
-} t_main;
-
+}	t_main;
 
 typedef struct params
 {
@@ -34,10 +45,10 @@ typedef struct params
 	int		fd[2];
 }	t_params;
 
-
 /* **************** UTILS **************** */
 char	*join_path(char *s1, char sep, char *s2);
 char	**join_tab(char *cmd, char **args);
+void	print_error(char *cmd, char *name, char *message);
 
 int		ft_strchr(char *str, char c);
 void	free_tab(char **tab);

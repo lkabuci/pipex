@@ -6,10 +6,10 @@ NAME	=	pipex
 HEADER	=	pipex.h
 SRCS	=	pipex.c \
 			parse.c \
-			utils.c \
 			split.c \
-			exits.c \
-			pipex_utils.c \
+			error.c \
+			utils.c \
+			utils2.c \
 
 OBJS	=	$(SRCS:.c=.o)
 
