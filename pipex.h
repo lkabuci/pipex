@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include <string.h>
 #include <fcntl.h>
 
 typedef struct s_cmd
@@ -47,6 +48,7 @@ char	**ft_split(char *str, char sep);
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strncmp(char *s1, char *s2, size_t n);
 void	at_exit(t_params *p, pid_t *pid1, pid_t *pid2);
+void	ft_exits(int error, int toExit, int exitStatus);
 
 int		parsing(t_params *p);
 

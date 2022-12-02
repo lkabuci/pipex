@@ -2,10 +2,14 @@
 
 void	at_exit(t_params *p, pid_t *pid1, pid_t *pid2)
 {
-	close(p->fd[0]);
-	close(p->fd[1]);
-	waitpid(*pid1, NULL, 0);
-	waitpid(*pid2, NULL, 0);
+	if (close(p->fd[0]) == -1)
+		ft_exits(errno, 1, EXIT_FAILURE);
+	if (close(p->fd[1]) == -1)
+		ft_exits(errno, 1, EXIT_FAILURE);
+	if (waitpid(*pid1, NULL, 0) == -1)
+		ft_exits(errno, 1, EXIT_FAILURE);
+	if (waitpid(*pid2, NULL, 0) == -1)
+		ft_exits(errno, 1, EXIT_FAILURE);
 	free_tab(p->cmd1.args);
 	free(p->cmd1.path);
 	free(p->cmd2.path);

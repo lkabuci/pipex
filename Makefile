@@ -4,10 +4,11 @@ CFLAGS	=	-Wall -Wextra -Werror -g
 
 NAME	=	pipex
 HEADER	=	pipex.h
-SRCS_MD	=	./mandatorypipex.c \
+SRCS	=	pipex.c \
 			parse.c \
 			utils.c \
 			split.c \
+			exits.c \
 			pipex_utils.c \
 
 OBJS	=	$(SRCS:.c=.o)
@@ -24,6 +25,6 @@ clean:
 	$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME) a.out
+	$(RM) $(NAME) a.out outfile infile
 
 re: fclean all

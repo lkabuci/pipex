@@ -26,6 +26,8 @@ static int	get_path(t_params *p, t_cmd *cmd)
 		return (1);
 	}
 	paths = ft_split(p->env_paths + 5, ':');
+	if (!paths)
+		return 0;
 	while(paths[i])
 	{
 		path = join_path(paths[i], '/', cmd->cmd);
@@ -39,8 +41,6 @@ static int	get_path(t_params *p, t_cmd *cmd)
 		}
 		i++;
 	}
-	// ! I should print an error that the command not found
-	//   and exit
 	free_tab(paths);
 	cmd->path = NULL;
 	return (-1);
@@ -64,14 +64,14 @@ int	parsing(t_params *p)
 	get_env_path(p);
 	if ((get_path(p, &p->cmd1) == -1))
 	{
-		perror(p->cmd1.cmd);
-		// Print command not found error
-		// keep in mind that youshuld not exit
-		// until the next pipe
-		printf("command not found error\n");
+		ft_putstr_fd(2, "zsh: command not found: ");
+		ft_putstr_fd(2, p->cmd1.cmd);
 	}
 	if ((get_path(p, &p->cmd2) == -1))
-		printf("Error in cmd 2\n");
+	{
+		ft_putstr_fd(2, "zsh: command not found: ");
+		ft_putstr_fd(2, p->cmd2.cmd);
+	}
 	return 1;
 }
 
