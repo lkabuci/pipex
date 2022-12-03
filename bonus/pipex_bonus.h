@@ -6,7 +6,7 @@
 /*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:08:07 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/03 15:44:18 by relkabou         ###   ########.fr       */
+/*   Updated: 2022/12/03 18:55:59 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,52 @@ typedef struct s_main
 	char	**envp;
 }	t_main;
 
+typedef struct s_files
+{
+	char	*infile;
+	char	*outfile;
+}	t_files;
+
 typedef struct s_cmd
 {
-	char	*cmd;
-	char	*path;
-	char	**args;
-	char	*env_aths;
-	char	fd[2];
+	char			*cmd;
+	char			*path;
+	char			**args;
+	char			fd[2];
+	struct s_cmd	*next;
 }	t_cmd;
 
+typedef struct params
+{
+	t_main		main;
+	t_files		file;
+	t_cmd		*cmd;
+	char		*main_path;
+}	t_params;
+
+/* ************* utils1.c ************* */
+void	ft_putstr_fd(int fd, char *str);
+size_t	ft_strlen(char *str);
+void	free_tab(char **tab);
+void	*ft_memcpy(void *dst, void *src, size_t n);
+int		ft_strncmp(char *s1, char *s2, size_t n);
+
+/* ************* utils2.c ************* */
+int		ft_strchr(char *str, char c);
+
+/* ************* lst_manip.c ************* */
+t_cmd	*lst_new(t_params *p, char **args);
+void	lst_del();
+void	lst_last();
+void	lst_add_back();
+
+/* ************* split_b.c ************* */
+char	**ft_split(char *str, char sep);
+
+/* ************* utils3.c ************* */
+/* ************* switcher.c ************* */
+/* ************* parse_bonus.c ************* */
+void	parse(t_params *p);
 
 
 #endif // PIPEX_BONUS_H
