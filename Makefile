@@ -1,30 +1,15 @@
-CC		=	cc
-RM		=	rm -rf
-CFLAGS	=	-Wall -Wextra -Werror -g
+all:
+	make -C mandatory
 
-NAME	=	pipex
-HEADER	=	pipex.h
-SRCS	=	pipex.c \
-			parse.c \
-			split.c \
-			error.c \
-			utils.c \
-			utils2.c \
-
-OBJS	=	$(SRCS:.c=.o)
-
-all:	$(NAME) $(HEADER)
-
-$(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) $^ -o $(NAME)
-
-%.o:	%.c
-	$(CC) $(CFLAGS) -c $<
+bonus:
+	make -C bonus
 
 clean:
-	$(RM) $(OBJS)
+	make clean -C mandatory
+	make clean -C bonus
 
 fclean: clean
-	$(RM) $(NAME) a.out outfile infile
+	make fclean -C mandatory
+	make fclean -C bonus
 
-re: fclean all
+.PHONY: bonus all clean fclean
