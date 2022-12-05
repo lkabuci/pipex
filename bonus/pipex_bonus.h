@@ -38,7 +38,7 @@ typedef struct s_cmd
 	char			*cmd;
 	char			*path;
 	char			**args;
-	char			fd[2];
+	int				fd[2];
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -47,7 +47,7 @@ typedef struct params
 	t_main		main;
 	t_files		file;
 	t_cmd		*cmd;
-	char		*main_path;
+	char		**main_path;
 }	t_params;
 
 /* ************* utils1.c ************* */
@@ -59,17 +59,18 @@ int		ft_strncmp(char *s1, char *s2, size_t n);
 
 /* ************* utils2.c ************* */
 int		ft_strchr(char *str, char c);
+char	*join_path(char *s1, char sep, char *s2);
 
 /* ************* lst_manip.c ************* */
-t_cmd	*lst_new(t_params *p, char **args);
-void	lst_del();
-void	lst_last();
-void	lst_add_back();
+t_cmd	*lst_new(char **args);
+void	lst_add_back(t_params *p, t_cmd *cmd);
 
 /* ************* split_b.c ************* */
 char	**ft_split(char *str, char sep);
 
-/* ************* utils3.c ************* */
+/* ************* pipes_bonus.c ************* */
+void	close_all_pipes(t_params *p);
+
 /* ************* switcher.c ************* */
 /* ************* parse_bonus.c ************* */
 void	parse(t_params *p);

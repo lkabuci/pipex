@@ -12,13 +12,10 @@
 
 #include "pipex_bonus.h"
 
-static char	*get_valid_pahth(t_params *p)
+t_cmd	*lst_new(char **args)
 {
-	
-}
-
-t_cmd	*lst_new(t_params *p, char **args)
-{
+	//TODO - Free args
+	//TODO - Free cmd_node
 	t_cmd	*cmd_node;
 
 	cmd_node = (t_cmd *) malloc(sizeof(t_cmd));
@@ -26,5 +23,31 @@ t_cmd	*lst_new(t_params *p, char **args)
 		return ((t_cmd *)NULL);
 	cmd_node->cmd = *args;
 	cmd_node->args = args;
+	cmd_node->next = NULL;
+	if (pipe(cmd_node->fd) == -1)
+	{
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
 	return (cmd_node);	
 }
+
+void	lst_add_back(t_params *p, t_cmd *cmd)
+{
+	t_cmd	*tmp;
+
+	tmp = p->cmd;
+	if (!p || !cmd)
+		return ;
+	if (!tmp)
+	{
+		p->cmd = cmd;
+		return ;
+	}
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = cmd;
+}
+
+//TODO - Create a func that liberate a node and it's sub component
+// void	free_nodes(t_params *p);

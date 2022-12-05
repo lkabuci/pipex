@@ -12,46 +12,57 @@
 
 #include "pipex_bonus.h"
 
-static void	get_env_path(t_params *p)
+static char **get_main_path(t_params *p)
 {
 	while (p->main.envp)
 	{
 		if (!*p->main.envp || !p->main.envp)
 			break ;
 		if (!(ft_strncmp("PATH=", *p->main.envp, 5)))
-		{
-			p->main_path = *p->main.envp;
-			return ;
-		}
+			return (ft_split(*p->main.envp + 5, ':'));
 		p->main.envp++;
 	}
-	p->main_path = NULL;
+	return (NULL);
 }
 
 static char	*get_valid_path(t_params *p, t_cmd *cmd)
 {
+	int		i;
+	char	*path;
+
+	i = -1;
 	if (ft_strchr(cmd->cmd, '/') && !access(cmd->cmd, F_OK | X_OK))
+		return (cmd->cmd);
+	while (p->main_path && p->main_path[++i])
 	{
-		cmd->path = cmd->cmd;
-		return ;
+		path = join_path(p->main_path[i], '/', cmd->cmd);
+		if ((access(path, F_OK | X_OK)) == -1)
+			free(path);
+		else
+		{
+			// cmd->path = path;
+			// free_tab(p->main_path);
+			return (path);
+		}
 	}
+	// free_tab(p->main_path);
+	return (NULL);
 }
 
 static void	get_commands(t_params *p)
 {
 	int		idx;
-	char	**args;
-	char	*path;
 	t_cmd	*cmd;
 
 	idx = 2;
+	//TODO - Free p->main_path
+	p->main_path = get_main_path(p);
 	while (idx < p->main.ac - 1)
 	{
-		args = ft_split(p->main.av[idx], ' ');
-		cmd = lst_new(p, args);
-		path = get_valid_path(p, cmd);
-		cmd->path = path;
-		lst_add_back(p, cmd, path);
+		//TODO - Free everything inside the cmd node
+		cmd = lst_new(ft_split(p->main.av[idx], ' '));
+		cmd->path = get_valid_path(p, cmd);
+		lst_add_back(p, cmd);
 		idx++;
 	}
 }
@@ -63,7 +74,7 @@ void	parse(t_params *p)
 		ft_putstr_fd(2, "Not enough arguments");
 		exit(EXIT_FAILURE);
 	}
-	p->file.infile = p->main.av[0];
+	p->file.infile = p->main.av[1];
 	p->file.outfile = p->main.av[p->main.ac - 1];
 	get_commands(p);
 }

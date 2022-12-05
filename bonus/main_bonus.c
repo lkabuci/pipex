@@ -21,16 +21,24 @@ int	main(int argc, char **argv, char **envp)
 	main.av = argv;
 	main.envp = envp;
 	p.main = main;
+	p.cmd = NULL;
 	parse(&p);
 	printf("%s\n", p.file.infile);
 	printf("%s\n", p.file.outfile);
-	while (p.cmd->next != NULL)
+	int i = -1;
+	while (p.cmd != NULL)
 	{
+		i = -1;
 		printf("cmd: %s\n", p.cmd->cmd);
-		printf("args: %s\n", p.cmd->args);
+		while (p.cmd->args[++i] != NULL)
+		{
+			printf("args: %s\t", p.cmd->args[i]);
+		}
+		printf("\n");
 		printf("path: %s\n", p.cmd->path);
 		printf("========================\n");
-		p.cmd->next++;
+		p.cmd = p.cmd->next;
+		sleep(1);
 	}
 	
 	return 0;

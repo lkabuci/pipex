@@ -1,27 +1,42 @@
 {
     "configurations": [
-        {
-            "name": "(lldb) Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/pipex",
-            "args": [
-                "infile",
-                "cat",
-                "sleep",
-                "/dev/stdout"
-            ],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [
-                {
-                    "name": "PATH",
-                    "value": "/Users/relkabou/goinfre/.brew/bin:/Users/relkabou/goinfre/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki"
-                }
-            ],
-            "externalConsole": false,
-            "MIMode": "lldb"
-        },
-    ],
-    "version": "2.0.0"
+    {
+        "name": "(gdb) Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/pipex",
+        "args": [
+            "infile",
+            "cat",
+            "wc -c",
+            "/dev/stdout"
+        ],
+        "stopAtEntry": false,
+        "cwd": "${fileDirname}",
+        "environment": [
+            {
+                "name": "PATH",
+                "value": "PATH=/home/redone/.go/bin:/home/redone/.Personal/Apps/:/home/redone/.Personal/scripts/:/usr/local/bin:/usr/bin:/usr/local/sbin:/var/lib/flatpak/exports/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+            }
+        ],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "setupCommands": [
+            {
+                "description": "recompile",
+                "text": "make"
+            },
+            {
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+            },
+            {
+                "description":  "Set Disassembly Flavor to Intel",
+                "text": "-gdb-set disassembly-flavor intel",
+                "ignoreFailures": true
+            }
+        ]
+    }
+    ]
 }

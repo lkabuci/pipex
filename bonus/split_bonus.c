@@ -97,21 +97,6 @@ char	**ft_split(char *s, char c)
 		while (*(char *)s && *(char *)s != c)
 			s++;
 	}
-	*(str + i) = 0;
+	*(str + i) = NULL;
 	return (str);
-}
-
-
-
-char	**ft_split(char *str, char sep)
-{
-	char	**buffer;
-	int		word_count;
-
-	word_count = word_counter(str, sep);
-	buffer = malloc(sizeof(char *) * (word_count + 1));
-	if (!buffer)
-		return ((char **)NULL);
-	
-	
 }
