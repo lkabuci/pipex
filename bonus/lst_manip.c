@@ -24,11 +24,11 @@ t_cmd	*lst_new(char **args)
 	cmd_node->cmd = *args;
 	cmd_node->args = args;
 	cmd_node->next = NULL;
-	if (pipe(cmd_node->fd) == -1)
-	{
-		perror("pipe");
-		exit(EXIT_FAILURE);
-	}
+	// if (pipe(cmd_node->fd) == -1)
+	// {
+	// 	perror("pipe");
+	// 	exit(EXIT_FAILURE);
+	// }
 	return (cmd_node);	
 }
 

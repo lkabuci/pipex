@@ -38,17 +38,20 @@ void	redirect_output(t_params *p)
 	close(fd);
 }
 
-void    close_all_pipes(t_params *p)
+void    close_all_pipes(t_params p, int	***arr_of_pipes)
 {
-	t_cmd	*tmp;
+	int	**tmp;
+	int	i;
 
-	tmp = p->cmd;
+	i = 0;
+	tmp = *arr_of_pipes;
 	if (!tmp)
 		return ;
-	while (tmp)
+	while (i < p.ncmd)
 	{
-		close(tmp->fd[0]);
-		close(tmp->fd[1]);
-		tmp = tmp->next;
+		close(tmp[i][0]);
+		close(tmp[i][1]);
+		// tmp++;
+		i++;
 	}
 }

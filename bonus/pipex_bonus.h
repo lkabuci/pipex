@@ -38,7 +38,7 @@ typedef struct s_cmd
 	char			*cmd;
 	char			*path;
 	char			**args;
-	int				fd[2];
+	// int				fd[2];
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -47,6 +47,9 @@ typedef struct params
 	t_main		main;
 	t_files		file;
 	t_cmd		*cmd;
+	int			ncmd;
+	int			*arr_of_pids;
+	int			**arr_of_pipes;
 	char		**main_path;
 }	t_params;
 
@@ -71,7 +74,7 @@ char	**ft_split(char *str, char sep);
 /* ************* pipes_bonus.c ************* */
 void	redirect_input(t_params *p);
 void	redirect_output(t_params *p);
-void	close_all_pipes(t_params *p);
+void	close_all_pipes(t_params p, int ***arr_of_pipes);
 
 /* ************* switcher.c ************* */
 /* ************* parse_bonus.c ************* */
