@@ -11,25 +11,26 @@
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+#include <sys/wait.h>
 
 pid_t	*get_pids(t_params p)
 {
 	pid_t	*arr_of_pids;
-	int		i;
+	// int		i;
 
-	i = 0;
+	// i = 0;
 	if (!p.cmd)
 		return ((pid_t *)0);
-	arr_of_pids = (pid_t) malloc(sizeof(pid_t) * (p.main.ac - 1));
+	arr_of_pids = (pid_t *) malloc(sizeof(pid_t) * (p.main.ac - 1));
 	if (!arr_of_pids)
 		return ((pid_t *)0);
-	while (p.cmd)
-	{
-		arr_of_pids[i] = i;
-		i++;
-		p.cmd = p.cmd->next;
-	}
-	arr_of_pids[i] = 0;
+	// while (p.cmd)
+	// {
+	// 	arr_of_pids[i] = i;
+	// 	i++;
+	// 	p.cmd = p.cmd->next;
+	// }
+	// arr_of_pids[i] = 0;
 	return (arr_of_pids);
 }
 
@@ -48,19 +49,50 @@ int	main(int argc, char **argv, char **envp)
 	parse(&p);
 
 	i = 0;
+	int is_first = 1;
+	int is_last = 1;
+	// pid_t wpid;
+	int status = 0;
 	arr_of_pids = get_pids(p);
-	while (p.cmd, i)
+	t_cmd *tmp;
+
+	tmp = p.cmd;
+	while (tmp && i < argc)
 	{
 		arr_of_pids[i] = fork();
-		
+		//FIXME - ONLY WORKS WITH THE FIRST COMMAND	
 		if (arr_of_pids[i] == 0)
 		{
-			//FIXME - HERE
-			dup2(p.cmd->fd[0]);
+			is_last = 0;
+			if (tmp->next == NULL)
+				is_last = 1;
+			if (is_first == 1)
+				redirect_input(&p);
+			else
+				dup2(tmp->fd[0], 0);
+			if (is_last == 1)
+				redirect_output(&p);
+			else
+				dup2(tmp->fd[1], 1);
+			close_all_pipes(&p);
+			is_first = 0;
+			if (execve(tmp->path, tmp->args, envp) == -1)
+				perror("line 74 in execve");
 		}
-		
-		p.cmd = p.cmd->next;
-		i++;
+		else
+		{
+			wait(&status);
+			// while ((wpid = wait(&status)) > 0);
+			tmp = tmp->next;
+			i++;
+		}
+	}
+	close_all_pipes(&p);
+
+	//FIXME - WAITS FOR CHILDS
+	for (int i = 1; i < argc - 2; i++)
+	{
+		wait(&status);
 	}
 	
 	/* print params
@@ -84,3 +116,11 @@ int	main(int argc, char **argv, char **envp)
 	*/
 	return 0;
 }
+
+//FIXME - Weird bug when trying to execute
+//		  ./pipex infile "cat" "grep a" "head -1" "/dev/stdout"
+//		  I only get hello, even though the infile is containg another data
+//		  It only reads the first line.
+/*!SECTION
+	The first and the last commands works just fine except for the one in the middile
+*/

@@ -69,6 +69,8 @@ void	lst_add_back(t_params *p, t_cmd *cmd);
 char	**ft_split(char *str, char sep);
 
 /* ************* pipes_bonus.c ************* */
+void	redirect_input(t_params *p);
+void	redirect_output(t_params *p);
 void	close_all_pipes(t_params *p);
 
 /* ************* switcher.c ************* */
