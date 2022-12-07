@@ -21,7 +21,7 @@ static void	exec_first(t_params *p)
 	if (fd == -1)
 	{
 		ft_fprintf(2, "bash: %s: No such file or directory", p->cmd1.file);
-		exit(EXIT_FAILURE);
+		exit(128);
 	}
 	if (dup2(fd, 0) == -1)
 		ft_exits(errno, 1, EXIT_FAILURE);
