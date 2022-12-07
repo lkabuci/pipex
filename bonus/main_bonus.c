@@ -66,56 +66,91 @@ int	main(int argc, char **argv, char **envp)
 	// End of parsing
 
 	i = 0;
-	int status;
+	// int status;
 	arr_of_pids = get_pids(p);
 	arr_of_pipes = get_pipes(p);
 	t_cmd	*tmp;
 
 	tmp = p.cmd;
 
-	arr_of_pids[i] = fork();
-	if (arr_of_pids[i] == 0)
+	int is_first = 1;
+	int is_last = 0;
+	while (tmp)
 	{
-		int fd = open (p.file.infile, O_RDONLY);
-		dup2(fd, 0);
-		dup2(arr_of_pipes[i][1], 1);
-		close(fd);
-		close_all_pipes(p, &arr_of_pipes);
-		if (execve(tmp->path, tmp->args, p.main.envp) == -1)
-			perror("first execve");
-	}
-	tmp = tmp->next;
-	while (tmp->next)
-	{
-		arr_of_pids[i] = fork();
-		if (arr_of_pids[i] == 0)
+		if ((arr_of_pids[i] = fork()) == 0)
 		{
-			dup2(arr_of_pipes[i][0], 0);
-			dup2(arr_of_pipes[i + 1][1], 1);
+			fprintf(stderr, "Execute cmd: %s, %i\n", tmp->cmd, i);fflush(stderr);
+			if (is_first)
+			{
+				int inf = open(p.file.infile, O_RDONLY);
+				dup2(inf, 0);
+				close(inf);
+			}
+			else
+				dup2(arr_of_pipes[i][0], 0);
+			if (is_last)
+			{
+				int outf = open (p.file.outfile, O_WRONLY | O_CREAT, 0644);
+				dup2(outf, 1);
+				close(outf);
+			}
+			else
+				dup2(arr_of_pipes[i + 1][1], 1);
 			close_all_pipes(p, &arr_of_pipes);
-			if (execve(tmp->path, tmp->args, envp) == -1)
-				perror("line 74 in execve");
+			if (execve(tmp->path, tmp->args, p.main.envp) == -1)
+				perror("line 89 execve");
 		}
-		wait(&status);
-		tmp = tmp->next;
-		i++;
-	}
-	arr_of_pids[i] = fork();
-	if (arr_of_pids[i] == 0)
-	{
-		int fd = open (p.file.outfile, O_WRONLY | O_CREAT, 0644);
-		dup2(arr_of_pipes[i][0], 0);
-		dup2(fd, 1);
-		close(fd);
+		else
+		{
+			is_first = 0;
+			tmp = tmp->next;
+			if (tmp->next == NULL)
+				is_last = 1;
+			i++;
+		}
 		close_all_pipes(p, &arr_of_pipes);
-		if (execve(tmp->path, tmp->args, p.main.envp) == -1)
-			perror("first execve");
+		for (int j = 0; j < argc - 2; j++)
+			wait(NULL);
+		fprintf(stderr, "WHAAAAT");fflush(stderr);
 	}
-	close_all_pipes(p, &arr_of_pipes);
-
-	for (int i = 1; i < argc - 2; i++)
-	{
-		wait(&status);
-	}
+	// arr_of_pids[i] = fork();
+	// if (arr_of_pids[i] == 0)
+	// {
+	// 	int fd = open (p.file.infile, O_RDONLY);
+	// 	dup2(fd, 0);
+	// 	dup2(arr_of_pipes[i][1], 1);
+	// 	close(fd);
+	// 	close_all_pipes(p, &arr_of_pipes);
+	// 	fprintf(stderr, "Execute first: %s\n", tmp->cmd);fflush(stderr);
+	// 	if (execve(tmp->path, tmp->args, p.main.envp) == -1)
+	// 		perror("first execve");
+	// }
+	// tmp = tmp->next;
+	// while (tmp->next)
+	// {
+	// 	arr_of_pids[i] = fork();
+	// 	if (arr_of_pids[i] == 0)
+	// 	{
+	// 		dup2(arr_of_pipes[i][0], 0);
+	// 		dup2(arr_of_pipes[i + 1][1], 1);
+	// 		close_all_pipes(p, &arr_of_pipes);
+	// 		fprintf(stderr, "loop: [%i] ==> %s\n", i, tmp->cmd);fflush(stderr);
+	// 		if (execve(tmp->path, tmp->args, envp) == -1)
+	// 			perror("line 74 in execve");
+	// 	}
+	// 	tmp = tmp->next;
+	// 	i++;
+	// }
+	// arr_of_pids[i] = fork();
+	// if (arr_of_pids[i] == 0)
+	// {
+	// 	int fd = open (p.file.outfile, O_WRONLY | O_CREAT, 0644);
+	// 	dup2(arr_of_pipes[i][0], 0);
+	// 	dup2(fd, 1);
+	// 	close(fd);
+	// 	close_all_pipes(p, &arr_of_pipes);
+	// 	if (execve(tmp->path, tmp->args, p.main.envp) == -1)
+	// 		perror("first execve");
+	// }
 	return 0;
 }

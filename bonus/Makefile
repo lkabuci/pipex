@@ -11,7 +11,8 @@ SRCS	=	main_bonus.c \
 			utils_bonus.c \
 			utils2_bonus.c \
 			pipes_bonus.c \
-			lst_manip.c
+			lst_manip_bonus.c \
+			here_doc_bonus.c
 
 OBJS	=	$(SRCS:.c=.o)
 
