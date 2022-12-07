@@ -20,6 +20,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include "libft.h"
 
 typedef struct s_cmd
 {
