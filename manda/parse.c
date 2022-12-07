@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include "libft.h"
 
 static void	get_env_path(t_params *p)
 {
@@ -71,7 +72,7 @@ int	parsing(t_params *p)
 {
 	if (p->main_params.ac != 5)
 	{
-		ft_putstr_fd(2, "Invalid arguments. Quiting...\n");
+		ft_fprintf(2, "Invalid arguments. Quiting...\n");
 		exit(EXIT_FAILURE);
 	}
 	p->cmd1.args = ft_split(p->main_params.av[2], ' ');

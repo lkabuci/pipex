@@ -5,23 +5,15 @@ CFLAGS		=	-Wall -Wextra -Werror -g -I
 LIBFT		=	../libft.a
 NAME		=	pipex
 
-SRCS		=	main_bonus.c \
-				parse_bonus.c \
-				split_bonus.c \
-				error_bonus.c \
-				utils_bonus.c \
-				utils2_bonus.c \
-				pipes_bonus.c \
-				lst_manip_bonus.c \
-				here_doc_bonus.c
+SRCS		=	main.c parse.c utils.c
 
 OBJ_DIR		=	../bin/
 OBJCTS		=	$(addprefix $(OBJ_DIR),$(SRCS:.c=.o))
 
 INC_DIR		=	../includes/
-INCLUDES	=	$(addprefix $(INC_DIR),pipex_bonus.h)
+INCLUDES	=	$(addprefix $(INC_DIR),pipex.h)
 
-bonus:	$(NAME) $(INCLUDES)
+all:	$(NAME) $(INCLUDES)
 
 $(NAME):	$(OBJCTS)
 	@$(CC) $(CFLAGS) $(INC_DIR) $^ $(LIBFT) -o ../$@

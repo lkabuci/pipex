@@ -1,16 +1,19 @@
+NAME	=	pipex
+
 all:
-	make -C bonus
-	make clean -C bonus
+	@make -C libft
+	@make -C manda
 
 bonus:
-	make -C bonus
+	@make -C libft
+	@make -C bonus
 
 clean:
-	make clean -C bonus
-	make clean -C bonus
+	rm -rf bin/
 
 fclean: clean
-	make fclean -C bonus
-	make fclean -C bonus
+	rm -rf $(NAME) libft.a
 
-.PHONY: bonus all clean fclean
+re:	fclean all
+
+.PHONY: bonus

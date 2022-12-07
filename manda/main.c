@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include "libft.h"
 
 static void	exec_first(t_params *p)
 {
@@ -19,7 +20,7 @@ static void	exec_first(t_params *p)
 	fd = open(p->cmd1.file, O_RDONLY);
 	if (fd == -1)
 	{
-		print_error("bash", p->cmd1.file, "No such file or directory");
+		ft_fprintf(2, "bash: %s: No such file or directory", p->cmd1.file);
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, 0) == -1)
@@ -34,7 +35,7 @@ static void	exec_first(t_params *p)
 		ft_exits(errno, 1, EXIT_FAILURE);
 	if (execve(p->cmd1.path, p->cmd1.args, p->main_params.env) == -1)
 	{
-		print_error("bash", p->cmd1.cmd, "command not found");
+		ft_fprintf(2, "bash: %s: command not found", p->cmd1.cmd);
 		exit(127);
 	}
 }
@@ -58,7 +59,7 @@ static void	exec_second(t_params *p)
 		ft_exits(errno, 1, EXIT_FAILURE);
 	if (execve(p->cmd2.path, p->cmd2.args, p->main_params.env) == -1)
 	{
-		print_error("bash", p->cmd2.cmd, "command not found");
+		ft_fprintf(2, "bash: %s: command not found", p->cmd2.cmd);
 		exit(127);
 	}
 }

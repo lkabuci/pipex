@@ -1,44 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/02 18:43:51 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/02 19:26:35 by relkabou         ###   ########.fr       */
+/*   Created: 2022/12/02 18:41:30 by relkabou          #+#    #+#             */
+/*   Updated: 2022/12/03 12:23:50 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include "libft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+void	free_tab(char **tab)
 {
-	size_t	s1_len;
-	size_t	s2_len;
-	char	*buffer;
+	int	i;
 
-	if (!s1 || !s2)
-		return (NULL);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	buffer = (char *) malloc(sizeof(char) * (s1_len + s2_len + 1));
-	if (!buffer)
-		return (NULL);
-	ft_memcpy(buffer, s1, s1_len);
-	ft_memcpy(buffer + s1_len, s2, s2_len);
-	return (buffer);
-}
-
-int	ft_strchr(char *str, char c)
-{
-	while (*str)
+	i = 0;
+	if (!tab)
+		return ;
+	while (tab[i])
 	{
-		if (*str == c)
-			return (1);
-		str++;
+		free(tab[i]);
+		i++;
 	}
-	return (0);
+	free(tab);
 }
 
 void	at_exit(t_params *p, pid_t *pid1, pid_t *pid2)
@@ -82,4 +69,13 @@ char	*join_path(char *s1, char sep, char *s2)
 		buffer[idx++] = *s2++;
 	buffer[idx] = 0;
 	return (buffer);
+}
+
+void	ft_exits(int error, int toExit, int exitStatus)
+{
+	ft_fprintf(2, strerror(error));
+	if (toExit == 1)
+	{
+		exit(exitStatus);
+	}
 }
