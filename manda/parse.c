@@ -13,20 +13,17 @@
 #include "pipex.h"
 #include "libft.h"
 
-static void	get_env_path(t_params *p)
+static char	*get_env_path(t_params *p)
 {
 	while (p->main_params.env)
 	{
 		if (!*p->main_params.env || !p->main_params.env)
 			break ;
 		if (!(ft_strncmp("PATH=", *p->main_params.env, 5)))
-		{
-			p->env_paths = *p->main_params.env;
-			return ;
-		}
+			return (*p->main_params.env);
 		p->main_params.env++;
 	}
-	p->env_paths = NULL;
+	return (NULL);
 }
 
 static char	**get_valid_paths(t_params *p)
@@ -39,7 +36,7 @@ static char	**get_valid_paths(t_params *p)
 	return (paths);
 }
 
-static void	get_path(t_params *p, t_cmd *cmd)
+static char	*get_path(t_params *p, t_cmd *cmd)
 {
 	char	**paths;
 	char	*path;
@@ -47,10 +44,7 @@ static void	get_path(t_params *p, t_cmd *cmd)
 
 	i = -1;
 	if (ft_strchr(cmd->cmd, '/') && !access(cmd->cmd, F_OK | X_OK))
-	{
-		cmd->path = cmd->cmd;
-		return ;
-	}
+		return (ft_strdup(cmd->cmd));
 	paths = get_valid_paths(p);
 	while (paths && paths[++i])
 	{
@@ -58,14 +52,10 @@ static void	get_path(t_params *p, t_cmd *cmd)
 		if ((access(path, F_OK | X_OK)) == -1)
 			free(path);
 		else
-		{
-			cmd->path = path;
-			free_tab(paths);
-			return ;
-		}
+			return (free_tab(paths), path);
 	}
 	free_tab(paths);
-	cmd->path = NULL;
+	return (NULL);
 }
 
 int	parsing(t_params *p)
@@ -83,8 +73,8 @@ int	parsing(t_params *p)
 	p->cmd2.cmd = p->cmd2.args[0];
 	p->cmd2.flag = p->cmd2.args[1];
 	p->cmd2.file = p->main_params.av[4];
-	get_env_path(p);
-	get_path(p, &p->cmd1);
-	get_path(p, &p->cmd2);
+	p->env_paths = get_env_path(p);
+	p->cmd1.path = get_path(p, &p->cmd1);
+	p->cmd2.path = get_path(p, &p->cmd2);
 	return (1);
 }

@@ -90,5 +90,5 @@ int	main(int ac, char **av, char **env)
 	if (!pid2)
 		exec_second(&p);
 	at_exit(&p, &pid1, &pid2);
-	return (1);
+	return (0);
 }
