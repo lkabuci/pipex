@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "pipex_bonus.h": "c"
+        "pipex_bonus.h": "c",
+        "istream": "c"
     }
 }

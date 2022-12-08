@@ -9,11 +9,14 @@ bonus:
 	@make -C bonus
 
 clean:
-	rm -rf bin/
+	@rm -rf bin/
+	@echo Cleaned
 
 fclean: clean
-	rm -rf $(NAME) libft.a
+	@rm -rf $(NAME) libft.a
+	@echo Erased
 
 re:	fclean all
+	@echo Recompiled.
 
 .PHONY: bonus

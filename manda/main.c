@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include "libft.h"
 
 static void	exec_first(t_params *p)
 {

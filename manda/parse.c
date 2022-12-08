@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include "libft.h"
 
 static char	*get_env_path(t_params *p)
 {

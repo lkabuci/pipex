@@ -54,3 +54,6 @@ dkms.conf
 # CUSTOM
 pipex
 a.out
+reference/
+OldBonus/
+ret

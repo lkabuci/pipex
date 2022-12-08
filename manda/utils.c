@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include "libft.h"
 
 void	free_tab(char **tab)
 {
@@ -36,7 +35,7 @@ void	at_exit(t_params *p, pid_t *pid1, pid_t *pid2)
 		ft_exits(errno, 1, EXIT_FAILURE);
 	if (close(p->fd[1]) == -1)
 		ft_exits(errno, 1, EXIT_FAILURE);
-	if (waitpid(*pid1, NULL, 0) == -1)
+	if (waitpid(*pid1, &exit_status, 0) == -1)
 		ft_exits(errno, 1, EXIT_FAILURE);
 	if (waitpid(*pid2, &exit_status, 0) == -1)
 		ft_exits(errno, 1, EXIT_FAILURE);
