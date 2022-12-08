@@ -47,21 +47,48 @@ typedef struct params
 	char		**main_path;
 }	t_params;
 
-/* ============== utils.c ============== */
+typedef struct	s_here_doc
+{
+	char	*delimiter;
+	char	*cmd1;
+	char	**args1;
+	char	*path1;
+	char	*cmd2;
+	char	**args2;
+	char	*path2;
+	char	*outfile;
+	char	*tmp_file;
+	int		pipeid[2];
+}	t_here_doc;
+
+/* ============== utils1.c ============== */
+void	exit_failure(int err, int status);
 void	free_tab(char **tab);
 char	*join_path(char *s1, char sep, char *s2);
+
+/* ============== utils2.c ============== */
+char	**get_paths_from_env(char **envp);
+char	*get_path(char *cmd, char **paths);
+void	at_exit_here_doc(t_here_doc *p, pid_t *pid1, pid_t *pid2);
 
 /* ============== lst_manip.c ============== */
 t_cmd	*lst_new(char **args);
 void	lst_add_back(t_params *p, t_cmd *cmd);
+
+/* ============== parse_bonus.c ============== */
+void	here_doc(int argc, char **argv, char **envp);
 
 /* ============== pipes_bonus.c ============== */
 void	redirect_input(t_params *p);
 void	redirect_output(t_params *p);
 void	close_all_pipes(t_params p, int ***arr_of_pipes);
 
+/* ============== here_doc.c ============== */
+void	here_doc(int argc, char **argv, char **envp);
+
 /* ============== parse_bonus.c ============== */
 void	parse(t_params *p);
+
 
 
 #endif // PIPEX_BONUS_H

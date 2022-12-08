@@ -19,6 +19,8 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <string.h>
+# include <sys/wait.h>
 
 /* ============================== Part 1 ============================== */
 char	*ft_strchr(char *s, int c);
