@@ -1,7 +1,7 @@
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-    here_doc(argc, argv, envp);
-    return 0;
+	here_doc(argc, argv, envp);
+	return 0;
 }

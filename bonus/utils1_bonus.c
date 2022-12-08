@@ -1,5 +1,11 @@
 # include "pipex_bonus.h"
 
+void	exit_failure(int err, int status)
+{
+	ft_fprintf(2, "%s", strerror(err));
+	exit(status);
+}
+
 void	free_tab(char **tab)
 {
 	int	i;
@@ -12,7 +18,7 @@ void	free_tab(char **tab)
 		free(tab[i]);
 		i++;
 	}
-	free(tab);
+	// free(tab);
 }
 
 char	*join_path(char *s1, char sep, char *s2)
@@ -38,3 +44,4 @@ char	*join_path(char *s1, char sep, char *s2)
 	buffer[idx] = 0;
 	return (buffer);
 }
+
