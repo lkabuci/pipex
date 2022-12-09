@@ -2,7 +2,7 @@
 
 void	exit_failure(int err, int status)
 {
-	ft_fprintf(2, "%s", strerror(err));
+	ft_fprintf(2, "%s\n", strerror(err));
 	exit(status);
 }
 

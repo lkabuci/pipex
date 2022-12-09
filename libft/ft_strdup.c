@@ -22,7 +22,7 @@ char	*ft_strdup(char *s1)
 	len = ft_strlen(s1);
 	buffer = (char *)malloc((len + 1) * sizeof(char));
 	if (!buffer)
-		return (0);
+		return (NULL);
 	while (index < len)
 	{
 		*(buffer + index) = *(s1 + index);

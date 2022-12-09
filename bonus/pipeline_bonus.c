@@ -1,15 +1,5 @@
 #include "pipex_bonus.h"
 
-static void	open_files(t_params *p)
-{
-	p->file.infd = open(p->file.infile, O_RDONLY);
-	if (p->file.infd == -1)
-		exit_failure(errno, 1);
-	p->file.outfd = open(p->file.outfile, O_TRUNC | O_WRONLY | O_CREAT, 0644);
-	if (p->file.outfd == -1)
-		exit_failure(errno, 1);
-}
-
 void	display(void *node)
 {
 	t_cmd *tmp = node;
@@ -43,8 +33,6 @@ t_list	*parse_commands(t_params *p)
 
 static void	parse_pipeline(int argc, char **argv, char **envp, t_params *p)
 {
-	pid_t	*arr_of_pids;
-	int		**pipelines;
 	int		i;
 
 	i = -1;
@@ -75,21 +63,19 @@ static void	parse_pipeline(int argc, char **argv, char **envp, t_params *p)
 void	pipeline(int argc, char **argv, char **envp)
 {
 	t_params	p;
-	t_cmd		*cmd;
-	int			i;
 
 	if (argc < 5)
 		return ;
-	i = 1;
 	parse_pipeline(argc, argv, envp, &p);
 
 	exec_first_cmd(&p);
 
-	exec_middle_cmd(&p);
+	exec_middle_cmds(&p);
 
 	ft_lstlast(p.cmds);
 	exec_last_cmd(&p);
 
+	ft_fprintf(2, "__SEGSEV__\n");
 	at_exit_pipeline(&p);
 }
 

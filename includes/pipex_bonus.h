@@ -83,7 +83,9 @@ void	redirect_output(t_params *p);
 void	close_all_pipes(t_params p, int ***arr_of_pipes);
 
 /* ============== pipeline_exec_bonus.c ============== */
-void	execute_pipeline(void *p);
+void	exec_first_cmd(t_params *p);
+void	exec_middle_cmds(t_params *p);
+void	exec_last_cmd(t_params *p);
 void	close_piplines(t_params *p);
 void	at_exit_pipeline(t_params *p);
 

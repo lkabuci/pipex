@@ -13,7 +13,7 @@ clean:
 	@echo Cleaned
 
 fclean: clean
-	@rm -rf $(NAME) libft.a
+	@rm -rf $(NAME) libft.a a.out ret
 	@echo Erased
 
 re:	fclean all

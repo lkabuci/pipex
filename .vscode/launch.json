@@ -6,10 +6,9 @@
             "request": "launch",
             "program": "${workspaceFolder}/pipex",
             "args": [
-                "here_doc",
-                "limiter",
-                "cat",
-                "grep a",
+                "infile",
+                "ls -l",
+                "wc -w",
                 "outfile"
             ],
             "stopAtEntry": false,
