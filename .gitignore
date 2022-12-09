@@ -57,3 +57,7 @@ a.out
 reference/
 OldBonus/
 ret
+infile
+outfile
+test.c
+
