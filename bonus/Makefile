@@ -8,7 +8,8 @@ NAME		=	pipex
 SRCS		=	main_bonus.c \
 				utils1_bonus.c \
 				utils2_bonus.c \
-				here_doc_bonus.c
+				here_doc_bonus.c \
+				pipeline_bonus.c
 
 OBJ_DIR		=	../bin/
 OBJCTS		=	$(addprefix $(OBJ_DIR),$(SRCS:.c=.o))
