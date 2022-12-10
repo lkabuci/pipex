@@ -41,7 +41,8 @@ void	exec_middle_cmds(t_params *p)
 	list_of_cmds = p->cmds->next;
 	while (list_of_cmds->next)
 	{
-		tmp = p->cmds->content;
+		tmp = list_of_cmds->content;
+		ft_fprintf(2, "__the command is: %s__\n", tmp->cmd);
 		pid = fork();
 		if (pid == -1)
 			exit_failure(errno, 1);
@@ -50,7 +51,7 @@ void	exec_middle_cmds(t_params *p)
 			if (dup2(p->pipelines[i - 2], 0) == -1)
 				exit_failure(errno, 1);
 			if (dup2(p->pipelines[i + 1], 1) == -1)
-				exit_failure(errno, 1);
+			 	exit_failure(errno, 1);
 			close_piplines(p);
 			if (execve(tmp->path, tmp->args, p->main.envp) == -1)
 			{
@@ -78,7 +79,7 @@ void	exec_last_cmd(t_cmd *last_cmd, t_params *p)
 			exit_failure(errno, 1);
 		if (dup2(fd, 1) == -1)
 			exit_failure(errno, 1);
-		if (dup2(p->pipelines[p->pipes_ports - 1], 0) == -1)
+		if (dup2(p->pipelines[p->pipes_ports - 2], 0) == -1)
 			exit_failure(errno, 1);
 		if (close(fd) == -1)
 			exit_failure(errno, 1);

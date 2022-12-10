@@ -66,8 +66,8 @@ void	pipeline(int argc, char **argv, char **envp)
 	exec_first_cmd(&p);
 	if (p.ncmd > 2)
 		exec_middle_cmds(&p);
-	last_cmd = ft_lstlast(p.cmds)->content;
-	exec_last_cmd(last_cmd, &p);
+ 	last_cmd = ft_lstlast(p.cmds)->content;
+ 	exec_last_cmd(last_cmd, &p);
 	at_exit_pipeline(&p);
 }
 
