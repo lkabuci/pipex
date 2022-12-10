@@ -51,7 +51,7 @@ static void	parse_pipeline(int argc, char **argv, char **envp, t_params *p)
 	{
 		if (pipe(p->pipelines + i * 2) == -1)
 			exit_failure(errno, 1);
-		i += 2;
+		i++;
 	}	
 }
 

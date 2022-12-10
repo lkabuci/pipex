@@ -42,7 +42,6 @@ void	exec_middle_cmds(t_params *p)
 	while (list_of_cmds->next)
 	{
 		tmp = list_of_cmds->content;
-		ft_fprintf(2, "__the command is: %s__\n", tmp->cmd);
 		pid = fork();
 		if (pid == -1)
 			exit_failure(errno, 1);
