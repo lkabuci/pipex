@@ -35,7 +35,7 @@ static void	parse_pipeline(int argc, char **argv, char **envp, t_params *p)
 {
 	int		i;
 
-	i = -1;
+	i = 0;
 	p->main.ac = argc;
 	p->main.av = argv;
 	p->main.envp = envp;
@@ -43,39 +43,31 @@ static void	parse_pipeline(int argc, char **argv, char **envp, t_params *p)
 	p->file.infile = argv[1];
 	p->file.outfile = argv[argc - 1];
 	p->cmds = parse_commands(p);
-	p->arr_of_pids = malloc(sizeof(pid_t) * (p->ncmd + 1));
-	if (!p->arr_of_pids)
-		return ;
-	p->pipelines = malloc(sizeof(int *) * (p->ncmd));
+	p->pipes_ports = (p->ncmd - 1) * 2;
+	p->pipelines = malloc(sizeof(int) * p->pipes_ports);
 	if (!p->pipelines)
 		return ;
-	while (++i < p->ncmd)
+	while (i < p->ncmd - 1)
 	{
-		p->pipelines[i] = malloc(sizeof(int) * 2);
-		if (!p->pipelines[i])
-			// return (free_tab(p->pipelines));
-			return ;
-		if (pipe(p->pipelines[i]) == -1)
+		if (pipe(p->pipelines + i * 2) == -1)
 			exit_failure(errno, 1);
+		i += 2;
 	}	
 }
 
 void	pipeline(int argc, char **argv, char **envp)
 {
 	t_params	p;
+	t_cmd		*last_cmd;
 
 	if (argc < 5)
 		return ;
 	parse_pipeline(argc, argv, envp, &p);
-
 	exec_first_cmd(&p);
-
-	exec_middle_cmds(&p);
-
-	ft_lstlast(p.cmds);
-	exec_last_cmd(&p);
-
-	ft_fprintf(2, "__SEGSEV__\n");
+	if (p.ncmd > 2)
+		exec_middle_cmds(&p);
+	last_cmd = ft_lstlast(p.cmds)->content;
+	exec_last_cmd(last_cmd, &p);
 	at_exit_pipeline(&p);
 }
 

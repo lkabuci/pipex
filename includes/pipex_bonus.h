@@ -43,8 +43,8 @@ typedef struct params
 	t_files		file;
 	t_list		*cmds;
 	int			ncmd;
-	pid_t		*arr_of_pids;
-	int			**pipelines;
+	int			*pipelines;
+	int			pipes_ports;
 	char		**main_path;
 }	t_params;
 
@@ -85,7 +85,7 @@ void	close_all_pipes(t_params p, int ***arr_of_pipes);
 /* ============== pipeline_exec_bonus.c ============== */
 void	exec_first_cmd(t_params *p);
 void	exec_middle_cmds(t_params *p);
-void	exec_last_cmd(t_params *p);
+void	exec_last_cmd(t_cmd *last_cmd, t_params *p);
 void	close_piplines(t_params *p);
 void	at_exit_pipeline(t_params *p);
 
