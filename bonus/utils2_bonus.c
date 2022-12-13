@@ -2,7 +2,7 @@
 
 char	**get_paths_from_env(char **envp)
 {
-	while (envp)
+	while (envp && *envp)
 	{
 		if (!ft_strncmp(*envp, "PATH=", 5))
 			return (ft_split(*envp + 5, ':'));
@@ -21,7 +21,7 @@ char	*get_path(char *cmd, char **envp)
 	is_valid = access(cmd, X_OK);
 	if (!is_valid && ft_strchr(cmd, '/'))
 		return (free_tab(paths), ft_strdup(cmd));
-	while (*paths)
+	while (paths && *paths)
 	{
 		ret = join_path(*paths, '/', cmd);
 		is_valid = access(ret, X_OK);
@@ -45,9 +45,10 @@ void	at_exit_here_doc(t_here_doc *p, pid_t *pid1, pid_t *pid2)
 		exit_failure(errno, 1);
 	if (waitpid(*pid2, &exit_status, 0) == -1)
 		exit_failure(errno, 1);
-	// free_tab(p->cmd1.args);
-	// free(p->cmd1.path);
-	// free(p->cmd2.path);
-	// free_tab(p->cmd2.args);
+	free_tab(p->args1);
+	free_tab(p->args2);
+	free(p->path1);
+	free(p->path2);
+	free(p);
 	exit (WEXITSTATUS(exit_status));
 }

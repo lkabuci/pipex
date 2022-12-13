@@ -32,7 +32,6 @@ static t_here_doc	*parse_here_doc(char **argv, char **envp)
 {
 	t_here_doc	*p;
 
-	//NOTE - free at exit
 	p = (t_here_doc *) malloc(sizeof(t_here_doc));
 	if (!p)
 		exit(EXIT_FAILURE);
