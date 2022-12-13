@@ -1,5 +1,12 @@
 #include "pipex_bonus.h"
 
+static void	del_cmd(void *content)
+{
+	free(((t_cmd *)content)->cmd);
+	free_tab(((t_cmd *)content)->args);
+	free(((t_cmd *)content)->path);
+}
+
 void	exec_first_cmd(t_params *p)
 {
 	t_cmd	*tmp;
@@ -24,7 +31,7 @@ void	exec_first_cmd(t_params *p)
 		close_piplines(p);
 		if (execve(tmp->path, tmp->args, p->main.envp) == -1)
 		{
-			ft_fprintf(2, "bash: %s: command not found", tmp->cmd);
+			ft_fprintf(2, "bash: %s: command not found\n", tmp->cmd);
 			exit(127);
 		}
 	}
@@ -54,7 +61,7 @@ void	exec_middle_cmds(t_params *p)
 			close_piplines(p);
 			if (execve(tmp->path, tmp->args, p->main.envp) == -1)
 			{
-				ft_fprintf(2, "bash: %s: command not found", tmp->cmd);
+				ft_fprintf(2, "bash: %s: command not found\n", tmp->cmd);
 				exit(127);
 			}
 		}
@@ -85,7 +92,7 @@ void	exec_last_cmd(t_cmd *last_cmd, t_params *p)
 		close_piplines(p);
 		if (execve(last_cmd->path, last_cmd->args, p->main.envp) == -1)
 		{
-			ft_fprintf(2, "bash: %s: command not found", last_cmd->cmd);
+			ft_fprintf(2, "bash: %s: command not found\n", last_cmd->cmd);
 			exit(127);
 		}
 	}
@@ -99,10 +106,7 @@ void	close_piplines(t_params *p)
 	while (i < p->pipes_ports)
 	{
 		if (close(p->pipelines[i]) == -1)
-		{
-			ft_fprintf(2, "WHAT!!\n");
 			exit_failure(errno, 1);
-		}
 		i++;
 	}
 }
@@ -110,16 +114,20 @@ void	close_piplines(t_params *p)
 void	at_exit_pipeline(t_params *p)
 {
 	int	i;
+	int	j;
 	// int	status;
 
 	i = 0;
+	j = -1;
 	close_piplines(p);	
 	while (i < p->ncmd)
 	{
-		wait(NULL);
+		if (wait(NULL) == -1)
+			exit_failure(errno, 1);
 		i++;
 	}
-	// TODO: start freeing here;
-	// exit (WEXITSTATUS(status));	
+	ft_lstclear(&p->cmds, del_cmd);
+	while (++j < p->pipes_ports)
+		free(p->pipelines++);
 	exit(0);
 }

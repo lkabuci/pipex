@@ -1,14 +1,5 @@
 #include "pipex_bonus.h"
 
-void	display(void *node)
-{
-	t_cmd *tmp = node;
-	ft_fprintf(1, "cmd: %s\n", tmp->cmd);
-	ft_fprintf(1, "args: {%s, %s}\n", tmp->args[0], tmp->args[1]);
-	ft_fprintf(1, "path: %s\n", tmp->path);
-	ft_putstr_fd("=====================\n", 1);
-}
-
 t_list	*parse_commands(t_params *p)
 {
 	t_list	*cmds;
@@ -70,11 +61,3 @@ void	pipeline(int argc, char **argv, char **envp)
  	exec_last_cmd(last_cmd, &p);
 	at_exit_pipeline(&p);
 }
-
-
-
-
-
-
-
-	// ft_lstiter(p.cmds, &display);
