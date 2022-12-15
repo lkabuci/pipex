@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipeline_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/15 14:47:14 by relkabou          #+#    #+#             */
+/*   Updated: 2022/12/15 14:48:12 by relkabou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex_bonus.h"
 
 static t_list	*parse_commands(t_params *p)
@@ -57,7 +69,7 @@ void	pipeline(int argc, char **argv, char **envp)
 	exec_first_cmd(&p);
 	if (p.ncmd > 2)
 		exec_middle_cmds(&p);
- 	last_cmd = ft_lstlast(p.cmds)->content;
- 	exec_last_cmd(last_cmd, &p);
+	last_cmd = ft_lstlast(p.cmds)->content;
+	exec_last_cmd(last_cmd, &p);
 	at_exit_pipeline(&p);
 }

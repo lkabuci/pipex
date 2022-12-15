@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relkabou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 10:54:56 by relkabou          #+#    #+#             */
-/*   Updated: 2022/10/18 18:59:56 by relkabou         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:57:45 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,14 @@ typedef struct s_printf_params
 	int		fd;
 	char	form;
 	int		ret;
-	int		err;
-}   t_printf_params;
+}	t_printf_params;
 
 void	ft_putc(char c, t_printf_params *p);
 void	ft_puts(char *s, t_printf_params *p);
 void	ft_putn(long nbr, t_printf_params *p);
 void	ft_putx(unsigned long nbr, t_printf_params *p);
 void	ft_putp(void *nbr, t_printf_params *p);
-int     ft_fprintf(int fd, char *s, ...);
+int		ft_fprintf(int fd, char *s, ...);
 
 /* ============================= Get next line ============================= */
 # ifndef BUFFER_SIZE

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relkabou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 17:07:55 by relkabou          #+#    #+#             */
-/*   Updated: 2022/10/18 18:59:15 by relkabou         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:51:45 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*suffix_trim(char *str, char *sep)
 	return (buffer);
 }
 
-char	*ft_strtrim(char 	*s1, char 	*set)
+char	*ft_strtrim(char *s1, char *set)
 {
 	char	*buffer;
 	char	*str;

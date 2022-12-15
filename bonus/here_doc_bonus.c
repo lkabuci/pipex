@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/15 14:43:30 by relkabou          #+#    #+#             */
+/*   Updated: 2022/12/15 14:46:18 by relkabou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex_bonus.h"
 
 static void	write_here_doc_to_fd(t_here_doc p)
@@ -16,8 +28,8 @@ static void	write_here_doc_to_fd(t_here_doc p)
 		line = get_next_line(0);
 		if (!line)
 			return ;
-		if (!ft_strncmp(p.delimiter, line, delimiter_len) &&
-			*(line + delimiter_len) == '\n')
+		if (!ft_strncmp(p.delimiter, line, delimiter_len)
+			&& *(line + delimiter_len) == '\n')
 		{
 			if (close(fd) == -1)
 				exit_failure(errno, 1);
@@ -102,7 +114,7 @@ static void	exec_cmd2(t_here_doc *p, char **envp)
 	}
 }
 
-void    here_doc(int argc, char **argv, char **envp)
+void	here_doc(int argc, char **argv, char **envp)
 {
 	t_here_doc	*p;
 	pid_t		pid1;
@@ -111,7 +123,6 @@ void    here_doc(int argc, char **argv, char **envp)
 	if (argc != 6 || ft_strncmp(argv[1], "here_doc", 8))
 		return ;
 	p = parse_here_doc(argv, envp);
-
 	write_here_doc_to_fd(*p);
 	pid1 = fork();
 	if (pid1 == -1)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipeline_exec_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/15 14:48:42 by relkabou          #+#    #+#             */
+/*   Updated: 2022/12/15 14:48:54 by relkabou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex_bonus.h"
 
 static void	del_cmd(void *content)
@@ -83,7 +95,7 @@ void	at_exit_pipeline(t_params *p)
 	int	i;
 
 	i = 0;
-	close_piplines(p);	
+	close_piplines(p);
 	while (i < p->ncmd)
 	{
 		if (wait(NULL) == -1)

@@ -6,7 +6,7 @@
 /*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:08:07 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/03 18:55:59 by relkabou         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:58:06 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct params
 }	t_params;
 
 /* **** Here doc structure **** */
-typedef struct	s_here_doc
+typedef struct s_here_doc
 {
 	char	*delimiter;
 	char	*cmd1;
