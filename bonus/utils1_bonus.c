@@ -18,7 +18,7 @@ void	free_tab(char **tab)
 		free(tab[i]);
 		i++;
 	}
-	// free(tab);
+	free(tab);
 }
 
 char	*join_path(char *s1, char sep, char *s2)
@@ -57,13 +57,13 @@ t_cmd	*ft_strdup_cmd(t_cmd *cmd)
 		return (NULL);
 	node->cmd = ft_strdup(cmd->cmd);
 	node->path = ft_strdup(cmd->path);
-	while (cmd->args[i])
+	while (cmd->args && cmd->args[i])
 		i++;
 	node_args = malloc(sizeof(char *) * (i + 1));
 	if (!node_args)
 		return (NULL);
 	i = 0;
-	while (cmd->args[i])
+	while (cmd->args && cmd->args[i])
 	{
 		node_args[i] = ft_strdup(cmd->args[i]);
 		i++;
@@ -75,7 +75,9 @@ t_cmd	*ft_strdup_cmd(t_cmd *cmd)
 
 void	free_cmd_node(void	*cmd)
 {
-	t_cmd	*node = cmd;
+	t_cmd	*node;
+
+	node = cmd;
 	free(node->cmd);
 	free(node->path);
 	free_tab(node->args);

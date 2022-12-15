@@ -1,6 +1,6 @@
 #include "pipex_bonus.h"
 
-t_list	*parse_commands(t_params *p)
+static t_list	*parse_commands(t_params *p)
 {
 	t_list	*cmds;
 	t_cmd	*node;

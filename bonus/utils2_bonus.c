@@ -16,8 +16,10 @@ char	*get_path(char *cmd, char **envp)
 	char	*ret;
 	int		is_valid;
 	char	**paths;
+	char	**ptr;
 
 	paths = get_paths_from_env(envp);
+	ptr = paths;
 	is_valid = access(cmd, X_OK);
 	if (!is_valid && ft_strchr(cmd, '/'))
 		return (free_tab(paths), ft_strdup(cmd));
@@ -26,11 +28,11 @@ char	*get_path(char *cmd, char **envp)
 		ret = join_path(*paths, '/', cmd);
 		is_valid = access(ret, X_OK);
 		if (!is_valid)
-			return (free_tab(paths), ret);
+			return (free_tab(ptr), ret);
 		free(ret);
 		paths++;
 	}
-	return (free_tab(paths), NULL);
+	return (free_tab(ptr), NULL);
 }
 
 void	at_exit_here_doc(t_here_doc *p, pid_t *pid1, pid_t *pid2)
@@ -51,4 +53,17 @@ void	at_exit_here_doc(t_here_doc *p, pid_t *pid1, pid_t *pid2)
 	free(p->path2);
 	free(p);
 	exit (WEXITSTATUS(exit_status));
+}
+
+void	close_piplines(t_params *p)
+{
+	int	i;
+
+	i = 0;
+	while (i < p->pipes_ports)
+	{
+		if (close(p->pipelines[i]) == -1)
+			exit_failure(errno, 1);
+		i++;
+	}
 }

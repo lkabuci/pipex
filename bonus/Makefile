@@ -6,6 +6,7 @@ LIBFT		=	../libft.a
 NAME		=	pipex
 
 SRCS		=	main_bonus.c \
+				ft_checks.c \
 				utils1_bonus.c \
 				utils2_bonus.c \
 				here_doc_bonus.c \

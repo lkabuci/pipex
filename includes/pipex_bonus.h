@@ -48,6 +48,7 @@ typedef struct params
 	char		**main_path;
 }	t_params;
 
+/* **** Here doc structure **** */
 typedef struct	s_here_doc
 {
 	char	*delimiter;
@@ -74,13 +75,10 @@ char	**get_paths_from_env(char **envp);
 char	*get_path(char *cmd, char **envp);
 void	at_exit_here_doc(t_here_doc *p, pid_t *pid1, pid_t *pid2);
 
-/* ============== parse_bonus.c ============== */
-void	here_doc(int argc, char **argv, char **envp);
-
-/* ============== pipes_bonus.c ============== */
-void	redirect_input(t_params *p);
-void	redirect_output(t_params *p);
-void	close_all_pipes(t_params p, int ***arr_of_pipes);
+/* ============== ft_checks.c ============== */
+void	ft_close(int fd);
+void	ft_dup2(int oldfd, int newfd);
+void	ft_execve(char *path, char **args, char **envp);
 
 /* ============== pipeline_exec_bonus.c ============== */
 void	exec_first_cmd(t_params *p);
@@ -93,13 +91,9 @@ void	at_exit_pipeline(t_params *p);
 void	here_doc(int argc, char **argv, char **envp);
 
 /* ============== pipeline.c ============== */
-void	open_files(t_params *p);
 void	pipeline(int argc, char **argv, char **envp);
 
-
 /* ============== parse_bonus.c ============== */
-void	parse(t_params *p);
-
-
+void	here_doc(int argc, char **argv, char **envp);
 
 #endif // PIPEX_BONUS_H
