@@ -6,7 +6,7 @@
 /*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:47:14 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/15 14:48:12 by relkabou         ###   ########.fr       */
+/*   Updated: 2022/12/15 21:06:25 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_list	*parse_commands(t_params *p)
 
 	i = 1;
 	cmds = NULL;
-	node = malloc(sizeof(node));
+	node = malloc(sizeof(t_cmd));
 	if (!node)
 		return (NULL);
 	while (++i < p->main.ac - 1)

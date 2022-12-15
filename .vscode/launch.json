@@ -1,15 +1,15 @@
 {
     "configurations": [
         {
-            "name": "(gdb) Launch",
+            "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/pipex",
             "args": [
-                "infile",
-                "ls -l",
-                "wc -w",
-                "outfile"
+                "Makefile",
+                "/bin/cat",
+                "/usr/bin/wc",
+                "/dev/stdout"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -20,7 +20,7 @@
                 }
             ],
             "externalConsole": false,
-            "MIMode": "gdb",
+            "MIMode": "lldb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

@@ -6,7 +6,7 @@
 /*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:08:07 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/15 14:58:06 by relkabou         ###   ########.fr       */
+/*   Updated: 2022/12/15 19:30:39 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ typedef struct s_main
 typedef struct s_files
 {
 	char	*infile;
-	int		infd;
 	char	*outfile;
-	int		outfd;
 }	t_files;
 
 typedef struct s_cmd

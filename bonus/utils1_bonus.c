@@ -6,7 +6,7 @@
 /*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:49:08 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/15 14:49:39 by relkabou         ###   ########.fr       */
+/*   Updated: 2022/12/15 21:08:35 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ t_cmd	*ft_strdup_cmd(t_cmd *cmd)
 		return (NULL);
 	node->cmd = ft_strdup(cmd->cmd);
 	node->path = ft_strdup(cmd->path);
-	while (cmd->args && cmd->args[i])
+	while (cmd->args[i])
 		i++;
 	node_args = malloc(sizeof(char *) * (i + 1));
 	if (!node_args)
 		return (NULL);
 	i = 0;
-	while (cmd->args && cmd->args[i])
+	while (cmd->args[i])
 	{
 		node_args[i] = ft_strdup(cmd->args[i]);
 		i++;
