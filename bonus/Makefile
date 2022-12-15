@@ -11,6 +11,7 @@ SRCS		=	main_bonus.c \
 				utils2_bonus.c \
 				here_doc_bonus.c \
 				pipeline_bonus.c \
+				ft_checks.c \
 				pipeline_exec_bonus.c
 
 OBJ_DIR		=	../bin/
