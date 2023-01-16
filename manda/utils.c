@@ -72,7 +72,7 @@ char	*join_path(char *s1, char sep, char *s2)
 
 void	ft_exits(int error, int toExit, int exitStatus)
 {
-	ft_fprintf(2, strerror(error));
+	ft_fprintf(2, "%s\n", strerror(error));
 	if (toExit == 1)
 	{
 		exit(exitStatus);

@@ -14,6 +14,8 @@
 
 char	*ft_strchr(char *s, int c)
 {
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*(char *)s == (char)c)

@@ -68,9 +68,7 @@ int	parsing(t_params *p)
 	p->cmd2.args = ft_split(p->main_params.av[3], ' ');
 	p->cmd1.file = p->main_params.av[1];
 	p->cmd1.cmd = p->cmd1.args[0];
-	p->cmd1.flag = p->cmd1.args[1];
 	p->cmd2.cmd = p->cmd2.args[0];
-	p->cmd2.flag = p->cmd2.args[1];
 	p->cmd2.file = p->main_params.av[4];
 	p->env_paths = get_env_path(p);
 	p->cmd1.path = get_path(p, &p->cmd1);
