@@ -1,6 +1,6 @@
 CC			=	cc
 RM			=	rm -rf
-CFLAGS		=	-Wall -Wextra -Werror -g -I
+CFLAGS		=	-Wall -Wextra -Werror -fsanitize=address,leak -g -I
 
 LIBFT		=	../libft.a
 NAME		=	pipex

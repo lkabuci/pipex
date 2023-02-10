@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relkabou <relkabou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/03 15:08:07 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/15 19:30:39 by relkabou         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:09:27 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	free_cmd_node(void	*cmd);
 char	**get_paths_from_env(char **envp);
 char	*get_path(char *cmd, char **envp);
 void	at_exit_here_doc(t_here_doc *p, pid_t *pid1, pid_t *pid2);
+char	*heredoc_name(void);
 
 /* ============== ft_checks.c ============== */
 void	ft_close(int fd);

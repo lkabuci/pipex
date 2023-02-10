@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relkabou <relkabou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:49:45 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/15 14:49:52 by relkabou         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:23:12 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,27 @@ void	close_piplines(t_params *p)
 			exit_failure(errno, 1);
 		i++;
 	}
+}
+
+char *heredoc_name(void)
+{
+	static int	id;
+	char		*string_id;
+	char		*name;
+
+	while (1)
+	{
+		string_id = ft_itoa(id);
+		name = ft_strjoin("/tmp/.heredoc_", string_id);
+		if (access(name, F_OK) == -1)
+		{
+			free(string_id);
+			return (name);
+		}
+		free(name);
+		free(string_id);
+		id++;
+	}
+	ft_fprintf(2, "Error creating a tmp heredoc file\n");
+	exit(1);
 }

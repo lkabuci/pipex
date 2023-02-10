@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relkabou <relkabou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:49:08 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/15 21:08:35 by relkabou         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:23:32 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,3 +94,4 @@ void	free_cmd_node(void	*cmd)
 	free(node->path);
 	free_tab(node->args);
 }
+

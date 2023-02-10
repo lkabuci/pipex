@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_checks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relkabou <relkabou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:42:45 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/15 21:10:10 by relkabou         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:25:02 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,4 @@ void	ft_close(int fd)
 	if (close(fd) == -1)
 		exit_failure(errno, 1);
 }
+

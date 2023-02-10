@@ -3,14 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: relkabou <relkabou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: relkabou <relkabou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 14:43:30 by relkabou          #+#    #+#             */
-/*   Updated: 2022/12/15 21:10:24 by relkabou         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:29:33 by relkabou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+void				here_doc(int argc, char **argv, char **envp);
+static t_here_doc	*parse_here_doc(char **argv, char **envp);
+static void			write_here_doc_to_fd(t_here_doc p);
+static void			exec_cmd1(t_here_doc *p, char **envp);
+static void			exec_cmd2(t_here_doc *p, char **envp);
+
+void	here_doc(int argc, char **argv, char **envp)
+{
+	t_here_doc	*p;
+	pid_t		pid1;
+	pid_t		pid2;
+
+	if (argc != 6 || ft_strncmp(argv[1], "here_doc", 8))
+		return ;
+	p = parse_here_doc(argv, envp);
+	write_here_doc_to_fd(*p);
+	pid1 = fork();
+	if (pid1 == -1)
+		exit_failure(errno, 1);
+	if (pid1 == 0)
+		exec_cmd1(p, envp);
+	free(p->tmp_file);
+	pid2 = fork();
+	if (pid2 == -1)
+		exit_failure(errno, 1);
+	if (pid2 == 0)
+		exec_cmd2(p, envp);
+	at_exit_here_doc(p, &pid1, &pid2);
+}
+
+static t_here_doc	*parse_here_doc(char **argv, char **envp)
+{
+	t_here_doc	*p;
+
+	p = (t_here_doc *) malloc(sizeof(t_here_doc));
+	if (!p)
+		exit(EXIT_FAILURE);
+	p->delimiter = argv[2];
+	p->cmd1 = argv[3];
+	p->args1 = ft_split(p->cmd1, ' ');
+	p->path1 = get_path(p->args1[0], envp);
+	p->cmd2 = argv[4];
+	p->args2 = ft_split(p->cmd2, ' ');
+	p->path2 = get_path(p->args2[0], envp);
+	p->outfile = argv[5];
+	p->tmp_file = heredoc_name();
+	if (pipe(p->pipeid) == -1)
+		exit_failure(errno, 1);
+	return (p);
+}
 
 static void	write_here_doc_to_fd(t_here_doc p)
 {
@@ -38,27 +89,6 @@ static void	write_here_doc_to_fd(t_here_doc p)
 		ft_putstr_fd(line, fd);
 		free(line);
 	}
-}
-
-static t_here_doc	*parse_here_doc(char **argv, char **envp)
-{
-	t_here_doc	*p;
-
-	p = (t_here_doc *) malloc(sizeof(t_here_doc));
-	if (!p)
-		exit(EXIT_FAILURE);
-	p->delimiter = argv[2];
-	p->cmd1 = argv[3];
-	p->args1 = ft_split(p->cmd1, ' ');
-	p->path1 = get_path(p->args1[0], envp);
-	p->cmd2 = argv[4];
-	p->args2 = ft_split(p->cmd2, ' ');
-	p->path2 = get_path(p->args2[0], envp);
-	p->outfile = argv[5];
-	p->tmp_file = "._here_doc_";
-	if (pipe(p->pipeid) == -1)
-		exit_failure(errno, 1);
-	return (p);
 }
 
 static void	exec_cmd1(t_here_doc *p, char **envp)
@@ -114,25 +144,3 @@ static void	exec_cmd2(t_here_doc *p, char **envp)
 	}
 }
 
-void	here_doc(int argc, char **argv, char **envp)
-{
-	t_here_doc	*p;
-	pid_t		pid1;
-	pid_t		pid2;
-
-	if (argc != 6 || ft_strncmp(argv[1], "here_doc", 8))
-		return ;
-	p = parse_here_doc(argv, envp);
-	write_here_doc_to_fd(*p);
-	pid1 = fork();
-	if (pid1 == -1)
-		exit_failure(errno, 1);
-	if (pid1 == 0)
-		exec_cmd1(p, envp);
-	pid2 = fork();
-	if (pid2 == -1)
-		exit_failure(errno, 1);
-	if (pid2 == 0)
-		exec_cmd2(p, envp);
-	at_exit_here_doc(p, &pid1, &pid2);
-}
