@@ -27,6 +27,10 @@ it should behave like `cmd1 << LIMITER | cmd2 >> file`
 ```
 it should behave like `< infile cmd1 | cmd2 | cmd3 | cmdn > outfile`
 
+
+![Pipeline Workflow](https://user-images.githubusercontent.com/95357302/218268434-a7c8b25d-d5a1-4274-84a2-c5c2e69e842a.png)
+
+
 The pipex 42 network project makes use of several functions from the standard library, including the following:
 
     pipe(): This function is used to create a new pipe and return two file descriptor that can be used to read and write data to the pipe.
